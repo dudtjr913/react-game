@@ -1,0 +1,27 @@
+{
+  "name": "game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "webpack --mode=development"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dudtjr913/react-game.git"
+  },
+  "author": "Yeong",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dudtjr913/react-game/issues"
+  },
+  "homepage": "https://github.com/dudtjr913/react-game#readme",
+  "dependencies": {
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  }
+}

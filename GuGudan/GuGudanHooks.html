@@ -27,23 +27,27 @@
         const [answer, setAnswer] = React.useState("");
         const inputRef = React.useRef(null);
 
-        const onChangeValue = (e) => {
+        const onChangeValue = React.useCallback((e) => {
           setValue(e.target.value);
-        };
+        }, []);
 
-        const onSubmit = (e) => {
-          e.preventDefault();
-          if (parseInt(value) === first * second) {
-            setAnswer(`${value} 정답`);
-            setFirst(Math.ceil(Math.random() * 9));
-            setSecond(Math.ceil(Math.random() * 9));
-            setValue("");
-          } else {
-            setAnswer(`${value} 땡`);
-            setValue("");
-          }
-          inputRef.current.focus();
-        };
+        const onSubmit = React.useCallback(
+          (e) => {
+            e.preventDefault();
+            if (parseInt(value) === first * second) {
+              setAnswer(`${value} 정답`);
+              setFirst(Math.ceil(Math.random() * 9));
+              setSecond(Math.ceil(Math.random() * 9));
+              setValue("");
+            } else {
+              setAnswer(`${value} 땡`);
+              setValue("");
+            }
+            inputRef.current.focus();
+          },
+          [value]
+        );
+
         return (
           <React.Fragment>
             <div>{`${first} X ${second} 는 ?`}</div>
