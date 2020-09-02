@@ -1,7 +1,7 @@
 const React = require("react");
 const { Component } = React;
 
-class WordRelay extends Component {
+class WordRelayClass extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -12,8 +12,6 @@ class WordRelay extends Component {
   }
 
   handleInputChange = (e) => {
-    console.log(`value : ${e.target.value}`);
-    console.log(`currentValue : ${e.currentTarget.value}`);
     this.setState({ value: e.target.value });
   };
 
@@ -55,7 +53,7 @@ class WordRelay extends Component {
             value={this.state.value}
             onChange={this.handleInputChange}
           />
-          <button>입력</button>
+          <button>입력!!!</button>
         </form>
         <div>{this.state.result}</div>
       </>
@@ -63,4 +61,4 @@ class WordRelay extends Component {
   }
 }
 
-module.exports = WordRelay;
+module.exports = WordRelayClass;
