@@ -1,12 +1,10 @@
 const React = require("react");
-const { useState, useCallback, useRef } = require("react");
 
-const QuestionChange = ({ start }) => {
+const QuestionChange = ({ i, tries }) => {
   return (
-    <div>
-      {start}
-      {console.log(start)}
-    </div>
+    <span>
+      시도{i} : {tries.strike}스트라이크 {tries.ball}볼
+    </span>
   );
 };
 

@@ -1,7 +1,6 @@
 const React = require("react");
-const { useState, useCallback, useRef } = require("react");
+const { useState, useCallback, useRef, useEffect } = require("react");
 const QuestionChange = require("./QuestionChange");
-const { create } = require("domain");
 
 const createNumber = () => {
   const allNumbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
@@ -20,17 +19,20 @@ const createNumber = () => {
 const NumberBaseball = () => {
   const [strike, setStrike] = useState(0);
   const [ball, setBall] = useState(0);
-  const [result, setResult] = useState("");
   const [value, setValue] = useState("");
   const [start, setStart] = useState(false);
   const [number, setNumber] = useState("");
+  const [result, setResult] = useState("");
+  const [tries, setTries] = useState([]);
 
   const handleOnClick = useCallback(() => {
     if (start) {
       setStart(false);
+      setNumber("");
       return;
     }
     setStart(true);
+    setResult("");
     setNumber(createNumber);
   }, [start]);
 
@@ -38,7 +40,7 @@ const NumberBaseball = () => {
     setValue(e.target.value);
   }, []);
 
-  const handleOnSubmit = useCallback((e) => {
+  const handleOnSubmit = (e) => {
     e.preventDefault();
     setStrike(0);
     setBall(0);
@@ -59,8 +61,16 @@ const NumberBaseball = () => {
         });
       }
     }
-    console.log(ball, strike);
-  });
+    console.log(strike, ball);
+    setValue("");
+  };
+
+  if (strike === 4) {
+    setResult(`${strike}스트라이크 정답`);
+    setStrike(0);
+    setBall(0);
+    handleOnClick();
+  }
 
   return (
     <>
@@ -81,6 +91,16 @@ const NumberBaseball = () => {
         <button>입력!</button>
       </form>
       <div>{result}</div>
+      {console.log(tries)}
+      <ul>
+        {tries.map((value, i) => {
+          return (
+            <li>
+              <QuestionChange tries={value} />
+            </li>
+          );
+        })}
+      </ul>
     </>
   );
 };

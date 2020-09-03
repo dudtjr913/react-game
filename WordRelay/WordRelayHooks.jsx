@@ -11,18 +11,21 @@ const WordRelayHooks = () => {
     setValue(e.target.value);
   }, []);
 
-  const handleOnSubmit = useCallback((e) => {
-    e.preventDefault();
-    if (value[0] === question[question.length - 1]) {
-      setResult("딩동댕");
-      setQuestion(value);
-      setValue("");
-    } else {
-      setResult("땡");
-      setValue("");
-    }
-    inputRef.current.focus();
-  }, []);
+  const handleOnSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (value[0] === question[question.length - 1]) {
+        setResult("딩동댕");
+        setQuestion(value);
+        setValue("");
+      } else {
+        setResult("땡");
+        setValue("");
+      }
+      inputRef.current.focus();
+    },
+    [value]
+  );
 
   return (
     <>
