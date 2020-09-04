@@ -6,6 +6,9 @@ module.exports = {
   devtool: "eval",
   resolve: {
     extensions: [".js", ".jsx"],
+    alias: {
+      "react-dom": "@hot-loader/react-dom",
+    },
   },
 
   entry: {
@@ -36,6 +39,7 @@ module.exports = {
       },
     ],
   },
+
   output: {
     path: path.join(__dirname, "dist"),
     filename: "[name].js",
