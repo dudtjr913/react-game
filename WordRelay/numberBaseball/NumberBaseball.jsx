@@ -1,5 +1,5 @@
 const React = require("react");
-const { useState, useCallback, useRef, useEffect } = require("react");
+const { useState, useCallback, useEffect } = require("react");
 const QuestionChange = require("./QuestionChange");
 
 const createNumber = () => {
@@ -29,10 +29,17 @@ const NumberBaseball = () => {
     if (start) {
       setStart(false);
       setNumber("");
+      setStrike(0);
+      setBall(0);
       return;
     }
     setStart(true);
     setResult("");
+    setValue("");
+    setNumber("");
+    setStrike(0);
+    setBall(0);
+    setTries([]);
     setNumber(createNumber);
   }, [start]);
 
@@ -46,8 +53,13 @@ const NumberBaseball = () => {
       if (!start) {
         setResult("게임을 시작해주세요");
         setValue("");
+        setNumber("");
         setStrike(0);
         setBall(0);
+        setTries([]);
+        return;
+      }
+      if (value === "") {
         return;
       }
       let strikeNum = 0;
@@ -70,27 +82,26 @@ const NumberBaseball = () => {
       setValue("");
       if (strikeNum === 4) {
         setResult("딩동댕");
+        setStart(false);
       }
 
-      let triesCopy = [...tries, { strike: strikeNum, ball: ballNum }];
-      setTries(triesCopy);
+      setTries([...tries, { strike: strikeNum, ball: ballNum }]);
       if (tries.length === 9 && strikeNum !== 4) {
         setStart(false);
-        setNumber("");
         setResult("땡!! 다시 도전하세요");
-        setTries([]);
-        setStrike(0);
-        setBall(0);
       }
     },
     [value, number]
   );
 
+  useEffect(() => {
+    console.log("RENDER");
+  });
   return (
     <>
       <div>
         숫자야구
-        <button onClick={handleOnClick}>{start ? "중지" : "시작"}</button>
+        <button onClick={handleOnClick}>{start ? "끝내기" : "시작"}</button>
       </div>
       <div>
         {strike}스트라이크 {ball}볼
@@ -106,13 +117,9 @@ const NumberBaseball = () => {
       </form>
       <div>{result}</div>
       <ul>
-        {tries.map((value, i) => {
-          return (
-            <li key={i}>
-              <QuestionChange tries={value} i={i + 1} />
-            </li>
-          );
-        })}
+        {tries.map((value, i) => (
+          <QuestionChange key={i} tries={value} i={i + 1} />
+        ))}
       </ul>
     </>
   );
