@@ -40,37 +40,51 @@ const NumberBaseball = () => {
     setValue(e.target.value);
   }, []);
 
-  const handleOnSubmit = (e) => {
-    e.preventDefault();
-    setStrike(0);
-    setBall(0);
-    let copyNumber = [];
-    for (let i = 0; i < 4; i++) {
-      if (parseInt(value[i]) === number[i]) {
-        setStrike((strike) => {
-          return strike + 1;
-        });
-      } else {
-        copyNumber.push(parseInt(number.slice(i, i + 1)));
+  const handleOnSubmit = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (!start) {
+        setResult("게임을 시작해주세요");
+        setValue("");
+        setStrike(0);
+        setBall(0);
+        return;
       }
-    }
-    for (let i = 0; i < copyNumber.length; i++) {
-      if (value.includes(copyNumber[i])) {
-        setBall((ball) => {
-          return ball + 1;
-        });
+      let strikeNum = 0;
+      let ballNum = 0;
+      let copyNumber = [];
+      for (let i = 0; i < 4; i++) {
+        if (parseInt(value[i]) === number[i]) {
+          strikeNum++;
+        } else {
+          copyNumber.push(parseInt(number.slice(i, i + 1)));
+        }
       }
-    }
-    console.log(strike, ball);
-    setValue("");
-  };
+      for (let i = 0; i < copyNumber.length; i++) {
+        if (value.includes(copyNumber[i])) {
+          ballNum++;
+        }
+      }
+      setStrike(strikeNum);
+      setBall(ballNum);
+      setValue("");
+      if (strikeNum === 4) {
+        setResult("딩동댕");
+      }
 
-  if (strike === 4) {
-    setResult(`${strike}스트라이크 정답`);
-    setStrike(0);
-    setBall(0);
-    handleOnClick();
-  }
+      let triesCopy = [...tries, { strike: strikeNum, ball: ballNum }];
+      setTries(triesCopy);
+      if (tries.length === 9 && strikeNum !== 4) {
+        setStart(false);
+        setNumber("");
+        setResult("땡!! 다시 도전하세요");
+        setTries([]);
+        setStrike(0);
+        setBall(0);
+      }
+    },
+    [value, number]
+  );
 
   return (
     <>
@@ -91,12 +105,11 @@ const NumberBaseball = () => {
         <button>입력!</button>
       </form>
       <div>{result}</div>
-      {console.log(tries)}
       <ul>
         {tries.map((value, i) => {
           return (
-            <li>
-              <QuestionChange tries={value} />
+            <li key={i}>
+              <QuestionChange tries={value} i={i + 1} />
             </li>
           );
         })}

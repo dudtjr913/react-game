@@ -1,4 +1,5 @@
 /node_modules
+/WordRelay/node_modules
 
 .eslintrc
 .prettierrc.js
