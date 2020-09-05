@@ -1,4 +1,5 @@
 const React = require("react");
+require("./RapidTest.css");
 
 const RandomNumber = () => {
   const times = [1000, 2000, 3000, 4000, 5000];
@@ -6,39 +7,45 @@ const RandomNumber = () => {
   return time;
 };
 
-class RapidTest extends React.Component {
+class RapidTest extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      color: "green",
-      start: false,
-      ms: "",
+      start: 0,
       result: [],
+      hurry: "",
     };
   }
 
+  startGame;
+  startTime;
+  endTime;
+
   handleOnClick = () => {
-    if (this.state.start === false) {
+    if (this.state.start === 0) {
       const time = RandomNumber();
       this.setState({
-        color: "red",
-        start: true,
+        start: 1,
+        hurry: "",
       });
-      setTimeout(() => {
+      this.startGame = setTimeout(() => {
         this.setState({
-          color: "blue",
-          ms: Date.now(),
+          start: 2,
         });
+        this.startTime = new Date();
       }, time);
-    }
-    if (this.state.start === true && this.state.color === "blue") {
+    } else if (this.state.start === 1) {
       this.setState({
-        start: false,
-        color: "green",
+        hurry: "이런! 성급하셨군요! 다시 도전해주세요.",
+        start: 0,
       });
+      clearTimeout(this.startGame);
+    } else if (this.state.start === 2) {
+      this.endTime = new Date();
       this.setState((prevState) => {
         return {
-          result: [...prevState.result, Date.now() - this.state.ms],
+          result: [...prevState.result, this.endTime - this.startTime],
+          start: 0,
         };
       });
     }
@@ -46,48 +53,53 @@ class RapidTest extends React.Component {
 
   handleOnReset = () => {
     this.setState({
-      color: "green",
-      start: false,
-      ms: "",
+      start: 0,
       result: [],
+      hurry: "",
     });
   };
 
-  handleOnDrag = () => {
-    return false;
+  resultAverage = () => {
+    const { result } = this.state;
+    if (result.length === 0) {
+      return null;
+    }
+    return (
+      <div>
+        평균 응답시간 :
+        {(result.reduce((a, b) => a + b) / result.length).toFixed(2) / 1}
+        ms
+        <div>
+          <button onClick={this.handleOnReset}>Reset</button>
+        </div>
+      </div>
+    );
   };
 
   render() {
+    const { start, hurry } = this.state;
     return (
       <>
-        <div
-          onClick={this.handleOnClick}
-          style={{
-            backgroundColor: this.state.color,
-            width: "30vw",
-            height: "40vh",
-            textAlign: "center",
-            fontSize: "30px",
-            userSelect: "none",
-          }}
-        >
-          {this.state.color === "green"
-            ? "클릭해서 시작하세요!"
-            : this.state.color === "red"
-            ? "파란색이 되면 눌러주세요"
-            : "클릭하세요!!!!!!!!"}
+        <div className="RapidDiv">
+          <div
+            className={
+              start === 0
+                ? "RapidDivGreen"
+                : start === 1
+                ? "RapidDivRed"
+                : "RapidDivBlue"
+            }
+            onClick={this.handleOnClick}
+          >
+            {start === 0
+              ? "시작하려면 클릭하세요!"
+              : start === 1
+              ? "파란색이 되면 클릭하세요!"
+              : "클릭하세요!!!!"}
+          </div>
         </div>
-        <div>
-          평균 응답시간 :{" "}
-          {this.state.result.length === 0
-            ? 0
-            : (
-                this.state.result.reduce((a, b) => a + b) /
-                this.state.result.length
-              ).toFixed(2) / 1}
-          ms
-        </div>
-        <button onClick={this.handleOnReset}>Reset</button>
+        <div>{hurry}</div>
+        {this.resultAverage()}
       </>
     );
   }

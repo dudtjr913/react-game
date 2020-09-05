@@ -6,14 +6,16 @@ const NumberBaseball = require("./numberBaseball/NumberBaseball");
 const WordRelayClass = require("./WordRelayClass");
 const WordRelayHooks = require("./WordRelayHooks");
 const RapidTest = require("./rapidTest/RapidTest");
+const RapidTestHooks = require("./rapidTest/RapidTestHooks");
 
 const HotRapid = hot(RapidTest);
+const HotRapidHooks = hot(RapidTestHooks);
 const HotWord = hot(WordRelayHooks);
 const HotBaseball = hot(NumberBaseball);
 
 ReactDOM.render(
   <>
-    <HotRapid />
+    <HotRapidHooks />
     {/* <HotWord />
     <p></p>
     <p></p>
