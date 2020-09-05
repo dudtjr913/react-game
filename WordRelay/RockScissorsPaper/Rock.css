@@ -1,0 +1,26 @@
+.rock {
+  width: 142px;
+  height: 200px;
+  background: url("https://en.pimg.jp/023/182/267/1/23182267.jpg");
+  background-position: 0 -20px;
+}
+
+.scissors {
+  width: 142px;
+  height: 200px;
+  background: url("https://en.pimg.jp/023/182/267/1/23182267.jpg");
+  background-position: -135px -20px;
+}
+
+.paper {
+  width: 142px;
+  height: 200px;
+  background: url("https://en.pimg.jp/023/182/267/1/23182267.jpg");
+  background-position: -265px -20px;
+}
+
+button {
+  margin-right: 5px;
+  width: 7vw;
+  font-size: 20px;
+}
