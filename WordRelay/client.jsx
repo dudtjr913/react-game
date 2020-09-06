@@ -12,8 +12,10 @@ const RapidTest = require("./rapidTest/RapidTest");
 const RapidTestHooks = require("./rapidTest/RapidTestHooks");
 
 const Lotto = require("./Lotto/Lotto");
+const LottoHooks = require("./Lotto/LottoHooks");
 
 const HotLotto = hot(Lotto);
+const HotLottoHooks = hot(LottoHooks);
 const HotRock = hot(Rock);
 const HotRockHooks = hot(RockHooks);
 const HotRapid = hot(RapidTest);
@@ -23,7 +25,7 @@ const HotBaseball = hot(NumberBaseball);
 
 ReactDOM.render(
   <>
-    <HotLotto />
+    <HotLottoHooks />
     {/*<HotRock />
      <HotRapidHooks />
     <HotWord />

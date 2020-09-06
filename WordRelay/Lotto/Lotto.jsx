@@ -1,17 +1,17 @@
 const React = require("react");
 require("./Lotto.css");
+const LottoProps = require("./LottoProps");
 
 const makeNumber = () => {
+  console.log("makeNumber");
   const numbers = Array(45)
     .fill()
     .map((v, i) => i + 1);
   const lottoNumber = [];
-  const lottoColor = ["yellow", "red", "green"];
   while (lottoNumber.length < 7) {
-    lottoNumber.push({
-      numbers: numbers.splice(Math.floor(Math.random() * numbers.length), 1)[0],
-      color: lottoColor[Math.floor(Math.random() * 3)],
-    });
+    lottoNumber.push(
+      numbers.splice(Math.floor(Math.random() * numbers.length), 1)[0]
+    );
   }
   return lottoNumber;
 };
@@ -21,14 +21,15 @@ class Lotto extends React.Component {
     super(props);
     this.state = {
       numbers: [],
-      bonusNumber: "",
+      bonusNumber: 0,
+      redo: false,
     };
   }
   lottoInterval;
   lottoNumber = makeNumber();
   lottoSetTimeout;
 
-  componentDidMount() {
+  gameStart = () => {
     this.lottoInterval = setInterval(() => {
       this.setState((prevState) => {
         return {
@@ -39,14 +40,24 @@ class Lotto extends React.Component {
     this.lottoSetTimeout = setTimeout(() => {
       this.setState({
         bonusNumber: this.lottoNumber[0],
+        redo: true,
       });
     }, 7000);
+  };
+
+  componentDidMount() {
+    this.gameStart();
   }
 
-  componentDidUpdate() {
-    if (this.state.numbers.length === 6) {
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.numbers.length === 5) {
       clearInterval(this.lottoInterval);
     }
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.lottoInterval);
+    clearTimeout(this.lottoSetTimeout);
   }
 
   handleOnReset = () => {
@@ -54,46 +65,25 @@ class Lotto extends React.Component {
     clearTimeout(this.lottoSetTimeout);
     this.setState({
       numbers: [],
-      bonusNumber: "",
+      bonusNumber: 0,
+      redo: false,
     });
     this.lottoNumber = makeNumber();
-    this.lottoInterval = setInterval(() => {
-      this.setState((prevState) => {
-        return {
-          numbers: [...prevState.numbers, this.lottoNumber.pop()],
-        };
-      });
-    }, 1000);
-    this.lottoSetTimeout = setTimeout(() => {
-      this.setState({
-        bonusNumber: this.lottoNumber[0],
-      });
-    }, 7000);
+    this.gameStart();
   };
 
   render() {
-    const { numbers, bonusNumber } = this.state;
+    const { numbers, bonusNumber, redo } = this.state;
     return (
       <>
         <div>당첨숫자</div>
         {numbers.map((v, i) => {
-          return (
-            <span className={`lottoSpan ${v.color}`} key={i}>
-              {v.numbers}
-            </span>
-          );
+          return <LottoProps number={v} key={i} />;
         })}
         <div>보너스</div>
-        <span
-          className={`lottoSpan ${bonusNumber.color}`}
-          style={
-            !bonusNumber ? { display: "none" } : { display: "inline-block" }
-          }
-        >
-          {bonusNumber.numbers}
-        </span>
+        {bonusNumber !== 0 && <LottoProps number={bonusNumber} />}
         <div>
-          <button onClick={this.handleOnReset}>다시하기</button>
+          {redo && <button onClick={this.handleOnReset}>다시하기</button>}
         </div>
       </>
     );
