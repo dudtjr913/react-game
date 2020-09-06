@@ -1,5 +1,5 @@
 const React = require("react");
-const { useCallback, useState, useRef, useEffect } = React;
+const { useCallback, useMemo, useState, useRef, useEffect } = React;
 const LottoProps = require("./LottoProps");
 const { number } = require("prop-types");
 require("./Lotto.css");
@@ -23,23 +23,24 @@ const LottoHooks = () => {
   const [bonusNumber, setBonusNumber] = useState(0);
   const [redo, setRedo] = useState(false);
   const lottoInterval = useRef();
-  const lottoNumber = useRef(makeNumber());
+  let lottoNumber = useMemo(() => makeNumber(), [redo]);
   const lottoSetTimeout = useRef();
 
-  const gameStart = () => {
+  const gameStart = useCallback(() => {
     console.log("gameStart");
     lottoInterval.current = setInterval(() => {
-      setNumbers(() => {
-        return [...numbers, lottoNumber.current.pop()];
+      setNumbers((prevNumbers) => {
+        return [...prevNumbers, lottoNumber.pop()];
       });
     }, 1000);
     lottoSetTimeout.current = setTimeout(() => {
-      setBonusNumber(lottoNumber.current[0]);
+      setBonusNumber(lottoNumber[0]);
       setRedo(true);
     }, 7000);
-  };
+  }, [numbers, bonusNumber]);
 
   useEffect(() => {
+    console.log("useEffect");
     if (numbers.length < 6) {
       gameStart();
     }
@@ -53,17 +54,17 @@ const LottoHooks = () => {
         clearTimeout(lottoSetTimeout.current);
       };
     }
-  }, [numbers]);
+  }, [numbers, bonusNumber]);
 
-  const handleOnReset = () => {
+  const handleOnReset = useCallback(() => {
     clearInterval(lottoInterval.current);
     clearTimeout(lottoSetTimeout.current);
     setNumbers([]);
     setBonusNumber(0);
     setRedo(false);
-    lottoNumber.current = makeNumber();
     gameStart();
-  };
+  }, []);
+
   return (
     <>
       <div>당첨숫자</div>
