@@ -23,7 +23,7 @@ const LottoHooks = () => {
   const [bonusNumber, setBonusNumber] = useState(0);
   const [redo, setRedo] = useState(false);
   const lottoInterval = useRef();
-  let lottoNumber = useMemo(() => makeNumber(), [redo]);
+  const lottoNumber = useMemo(() => makeNumber(), [redo]);
   const lottoSetTimeout = useRef();
 
   const gameStart = useCallback(() => {
@@ -39,7 +39,13 @@ const LottoHooks = () => {
     }, 7000);
   }, [numbers, bonusNumber]);
 
+  // const mounted = useRef(false);
   useEffect(() => {
+    /*if (!mounted.current) {
+      mounted.current = true;      ==> componentDidMount를 하지 않고 componentDidUpdate만 하고 싶을 때 쓰는 요령
+    } else {                           필요 없는 값인 변수를 만들고, false를 true로 바꿔주면서 componentDidMount가 실행되고,
+      //ajax요청                       그 후에는 메모리상에 true가 저장되어 있기 때문에 if부분이 실행되지 않고 else부분이 실행된다. 여기에 ajax요청을 하면 되겠다.
+    }*/
     console.log("useEffect");
     if (numbers.length < 6) {
       gameStart();
