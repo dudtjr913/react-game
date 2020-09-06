@@ -1,0 +1,31 @@
+body {
+  font-size: 30px;
+}
+.lottoSpan {
+  display: inline-block;
+  text-align: center;
+  margin-right: 10px;
+  border: 1px solid black;
+  border-radius: 50%;
+  padding: 2px 0px;
+  width: 50px;
+  font-size: 35px;
+  margin-top: 2px;
+}
+
+.yellow {
+  background-color: yellow;
+}
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+button {
+  width: 100px;
+  margin-top: 10px;
+}
