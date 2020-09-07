@@ -2,6 +2,10 @@ const React = require("react");
 const ReactDOM = require("react-dom");
 const { hot } = require("react-hot-loader/root");
 const NumberBaseball = require("./Games/numberBaseball/NumberBaseball");
+const { HashRouter, Route } = require("react-router-dom");
+
+const Home = require("./Home");
+const Links = require("./Link");
 
 const Rock = require("./Games/RockScissorsPaper/Rock");
 const RockHooks = require("./Games/RockScissorsPaper/RockHooks");
@@ -27,16 +31,29 @@ const HotWord = hot(WordRelayHooks);
 const HotBaseball = hot(NumberBaseball);
 
 ReactDOM.render(
-  <>
-    <HotTic />
-    {/* <HotRock />
-    <HotLottoHooks />
-     <HotRapidHooks />
-    <HotWord />
-    <p></p>
-    <p></p>
-    <p></p>
-   <HotBaseball /> */}
-  </>,
+  <HashRouter>
+    <Links />
+    <Route exact path="/">
+      <Home />
+    </Route>
+    <Route path="/tictactoe">
+      <HotTic />
+    </Route>
+    <Route path="/rsp">
+      <HotRock />
+    </Route>
+    <Route path="/lotto">
+      <HotLottoHooks />
+    </Route>
+    <Route path="/rapid">
+      <HotRapidHooks />
+    </Route>
+    <Route path="/wordrelay">
+      <HotWord />
+    </Route>
+    <Route path="/baseball">
+      <HotBaseball />
+    </Route>
+  </HashRouter>,
   document.querySelector("#root")
 );
