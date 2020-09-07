@@ -1,32 +1,39 @@
 {
-  "name": "word-relay",
+  "name": "game",
   "version": "1.0.0",
   "description": "",
-  "main": "index.html",
-  "scripts": {
-    "dev": "webpack-dev-server --hot"
-  },
-  "author": "YeongSeok",
-  "license": "ISC",
+  "main": "index.js",
   "dependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "styled-components": "^5.1.1"
+    "react-dom": "^16.13.1"
   },
   "devDependencies": {
+    "@babel/core": "^7.11.6",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@hot-loader/react-dom": "^16.13.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.1.0",
-    "babel-plugin-styled-components": "^1.11.1",
     "css-loader": "^4.2.2",
     "react-hot-loader": "^4.12.21",
     "style-loader": "^1.2.1",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
-  }
+  },
+  "scripts": {
+    "dev": "webpack-dev-server --hot"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dudtjr913/react-game.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dudtjr913/react-game/issues"
+  },
+  "homepage": "https://github.com/dudtjr913/react-game#readme"
 }

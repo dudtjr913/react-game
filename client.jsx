@@ -1,18 +1,18 @@
 const React = require("react");
 const ReactDOM = require("react-dom");
 const { hot } = require("react-hot-loader/root");
-const NumberBaseball = require("./numberBaseball/NumberBaseball");
+const NumberBaseball = require("./WordRelay/numberBaseball/NumberBaseball");
 
-const Rock = require("./RockScissorsPaper/Rock");
-const RockHooks = require("./RockScissorsPaper/RockHooks");
+const Rock = require("./WordRelay/RockScissorsPaper/Rock");
+const RockHooks = require("./WordRelay/RockScissorsPaper/RockHooks");
 
-const WordRelayClass = require("./WordRelayClass");
-const WordRelayHooks = require("./WordRelayHooks");
-const RapidTest = require("./rapidTest/RapidTest");
-const RapidTestHooks = require("./rapidTest/RapidTestHooks");
+const WordRelayClass = require("./WordRelay/WordRelayClass");
+const WordRelayHooks = require("./WordRelay/WordRelayHooks");
+const RapidTest = require("./WordRelay/rapidTest/RapidTest");
+const RapidTestHooks = require("./WordRelay/rapidTest/RapidTestHooks");
 
-const Lotto = require("./Lotto/Lotto");
-const LottoHooks = require("./Lotto/LottoHooks");
+const Lotto = require("./WordRelay/Lotto/Lotto");
+const LottoHooks = require("./WordRelay/Lotto/LottoHooks");
 
 const HotLotto = hot(Lotto);
 const HotLottoHooks = hot(LottoHooks);
@@ -26,7 +26,7 @@ const HotBaseball = hot(NumberBaseball);
 ReactDOM.render(
   <>
     <HotLottoHooks />
-    {/*<HotRock />
+    {/* <HotRock />
      <HotRapidHooks />
     <HotWord />
     <p></p>

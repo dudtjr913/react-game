@@ -5,7 +5,7 @@ module.exports = {
   mode: "development",
   devtool: "eval",
   resolve: {
-    extensions: [".js", ".jsx"],
+    extensions: [".js", ".jsx", ".css"],
     alias: {
       "react-dom": "@hot-loader/react-dom",
     },
@@ -18,7 +18,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.jsx?/,
+        test: [/\.jsx?/],
         loader: "babel-loader",
         options: {
           presets: [
