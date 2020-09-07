@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-  name: "WordRelay-Setting",
+  name: "Games-Setting",
   mode: "development",
   devtool: "eval",
   resolve: {
