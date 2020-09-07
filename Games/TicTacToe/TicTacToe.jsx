@@ -1,5 +1,5 @@
 const React = require("react");
-const TicComponent = require("./TicComponent");
+const Table = require("./Table");
 require("./tictactoe.css");
 
 class TicTacToe extends React.Component {
@@ -7,35 +7,16 @@ class TicTacToe extends React.Component {
     super(props);
     this.state = {
       text: "",
+      tableData: [
+        ["", "", ""],
+        ["", "", ""],
+        ["", "", ""],
+      ],
     };
   }
 
-  handleOnSelect = (e) => {
-    this.setState({
-      text: e.target.value,
-    });
-  };
-
-  handleOnClick = (e) => {
-    console.dir(e.target);
-    if (this.state.text === "O") {
-      this.setState({
-        text: "X",
-      });
-    } else if (this.state.text === "X") {
-      this.setState({
-        text: "O",
-      });
-    }
-  };
   render() {
-    return (
-      <TicComponent
-        click={this.handleOnClick}
-        select={this.handleOnSelect}
-        text={this.state.text}
-      />
-    );
+    return <Table tableData={this.state.tableData} />;
   }
 }
 
