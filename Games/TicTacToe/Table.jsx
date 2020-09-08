@@ -1,17 +1,22 @@
-const React = require("react");
-const Tr = require("./Tr");
+import React from "react";
+import Tr from "./Tr";
 
-const Table = ({ tableData }) => {
+const Table = React.memo(({ tableData, dispatch }) => {
   return (
     <table>
       <tbody>
         {Array(tableData.length)
           .fill()
           .map((data, i) => (
-            <Tr key={i} cellData={tableData[i]} rowIndex={i} />
+            <Tr
+              key={i}
+              rowData={tableData[i]}
+              rowIndex={i}
+              dispatch={dispatch}
+            />
           ))}
       </tbody>
     </table>
   );
-};
-module.exports = Table;
+});
+export default Table;

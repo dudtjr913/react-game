@@ -1,24 +1,25 @@
-const React = require("react");
-const ReactDOM = require("react-dom");
-const { hot } = require("react-hot-loader/root");
-const NumberBaseball = require("./Games/numberBaseball/NumberBaseball");
-const { HashRouter, Route } = require("react-router-dom");
+import React from "react";
+import ReactDOM from "react-dom";
+import { hot } from "react-hot-loader/root";
 
-const Home = require("./Home");
-const Links = require("./Link");
+import NumberBaseball from "./Games/numberBaseball/NumberBaseball";
+import { HashRouter, Route } from "react-router-dom";
 
-const Rock = require("./Games/RockScissorsPaper/Rock");
-const RockHooks = require("./Games/RockScissorsPaper/RockHooks");
+import Home from "./Home";
+import Links from "./Link";
 
-const WordRelayClass = require("./Games/WordRelayGame/WordRelayClass");
-const WordRelayHooks = require("./Games/WordRelayGame/WordRelayHooks");
-const RapidTest = require("./Games/rapidTest/RapidTest");
-const RapidTestHooks = require("./Games/rapidTest/RapidTestHooks");
+import Rock from "./Games/RockScissorsPaper/Rock";
+import RockHooks from "./Games/RockScissorsPaper/RockHooks";
 
-const Lotto = require("./Games/Lotto/Lotto");
-const LottoHooks = require("./Games/Lotto/LottoHooks");
+import WordRelayClass from "./Games/WordRelayGame/WordRelayClass";
+import WordRelayHooks from "./Games/WordRelayGame/WordRelayHooks";
+import RapidTest from "./Games/rapidTest/RapidTest";
+import RapidTestHooks from "./Games/rapidTest/RapidTestHooks";
 
-const TicTacToe = require("./Games/TicTacToe/TicTacToe");
+import Lotto from "./Games/Lotto/Lotto";
+import LottoHooks from "./Games/Lotto/LottoHooks";
+
+import TicTacToe from "./Games/TicTacToe/TicTacToe";
 
 const HotTic = hot(TicTacToe);
 const HotLotto = hot(Lotto);
@@ -40,7 +41,7 @@ ReactDOM.render(
       <HotTic />
     </Route>
     <Route path="/rsp">
-      <HotRock />
+      <HotRockHooks />
     </Route>
     <Route path="/lotto">
       <HotLottoHooks />

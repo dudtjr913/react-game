@@ -1,15 +1,21 @@
-const React = require("react");
-const Td = require("./Td");
+import React from "react";
+import Td from "./Td";
 
-const Tr = ({ cellData, rowIndex }) => {
+const Tr = React.memo(({ rowData, rowIndex, dispatch }) => {
   return (
     <tr>
-      {Array(cellData.length)
+      {Array(rowData.length)
         .fill()
         .map((data, i) => (
-          <Td key={i} rowIndex={rowIndex} cellIndex={i} />
+          <Td
+            key={i}
+            rowIndex={rowIndex}
+            cellIndex={i}
+            cellData={rowData[i]}
+            dispatch={dispatch}
+          />
         ))}
     </tr>
   );
-};
-module.exports = Tr;
+});
+export default Tr;
