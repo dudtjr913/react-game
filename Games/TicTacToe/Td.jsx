@@ -1,18 +1,18 @@
-import React from "react";
-import { useCallback, useState } from "react";
-import { CLICK_CELL, CHANGE_TURN } from "./TicTacToe";
+import React, { useCallback } from "react";
+import { CLICKED_TABLE } from "./TicTacToe";
 
-const Td = React.memo(({ cellIndex, rowIndex, cellData, dispatch }) => {
-  const handleClick = useCallback(() => {
-    if (cellData) {
+const Td = React.memo(({ cellData, rowIndex, cellIndex, dispatch, win }) => {
+  const handleOnClick = useCallback(() => {
+    if (cellData || win) {
       return;
     }
     dispatch({
-      type: CLICK_CELL,
-      cell: cellIndex,
+      type: CLICKED_TABLE,
       row: rowIndex,
+      cell: cellIndex,
     });
-  }, [cellData]);
-  return <td onClick={handleClick}>{cellData}</td>;
+  }, [cellData, win]);
+
+  return <td onClick={handleOnClick}>{cellData}</td>;
 });
 export default Td;
