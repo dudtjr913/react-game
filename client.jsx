@@ -11,6 +11,8 @@ import Links from "./Link";
 import Rock from "./Games/RockScissorsPaper/Rock";
 import RockHooks from "./Games/RockScissorsPaper/RockHooks";
 
+import Mine from "./Games/MineSearch/Mine";
+
 import WordRelayClass from "./Games/WordRelayGame/WordRelayClass";
 import WordRelayHooks from "./Games/WordRelayGame/WordRelayHooks";
 import RapidTest from "./Games/rapidTest/RapidTest";
@@ -30,6 +32,7 @@ const HotRapid = hot(RapidTest);
 const HotRapidHooks = hot(RapidTestHooks);
 const HotWord = hot(WordRelayHooks);
 const HotBaseball = hot(NumberBaseball);
+const HotMine = hot(Mine);
 
 ReactDOM.render(
   <HashRouter>
@@ -54,6 +57,9 @@ ReactDOM.render(
     </Route>
     <Route path="/baseball">
       <HotBaseball />
+    </Route>
+    <Route path="/minesearch">
+      <HotMine />
     </Route>
   </HashRouter>,
   document.querySelector("#root")

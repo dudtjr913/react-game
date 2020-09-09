@@ -40,6 +40,11 @@ const Links = () => {
           숫자야구
         </Link>
       </div>
+      <div>
+        <Link className="linkStyle" to="/minesearch">
+          지뢰찾기
+        </Link>
+      </div>
     </div>
   );
 };
