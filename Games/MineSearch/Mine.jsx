@@ -1,5 +1,6 @@
 import React, { useReducer, useCallback } from "react";
 import Table from "./Table";
+import Form from "./Form";
 
 const initialState = {
   tableData: [],
@@ -27,52 +28,9 @@ const reducer = (state, action) => {
 const Mine = () => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
-  const handleOnValue = useCallback(
-    (e) => {
-      const value = { ...state.value };
-      if (e.target.id === "row") {
-        value.row = e.target.value;
-        dispatch({
-          type: CHANGE_VALUE,
-          value: value,
-        });
-      } else if (e.target.id === "cell") {
-        value.cell = e.target.value;
-        dispatch({
-          type: CHANGE_VALUE,
-          value: value,
-        });
-      } else if (e.target.id === "number") {
-        value.number = e.target.value;
-        dispatch({
-          type: CHANGE_VALUE,
-          value: value,
-        });
-      }
-    },
-    [state.value]
-  );
-
   return (
     <>
-      <input
-        id="row"
-        type="number"
-        value={state.value.row}
-        onChange={handleOnValue}
-      />
-      <input
-        id="cell"
-        type="number"
-        value={state.value.cell}
-        onChange={handleOnValue}
-      />
-      <input
-        id="number"
-        type="number"
-        value={state.value.number}
-        onChange={handleOnValue}
-      />
+      <Form />
     </>
   );
 };
