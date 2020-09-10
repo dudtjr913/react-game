@@ -37,7 +37,7 @@ const Td = React.memo(({ cellIndex, rowIndex }) => {
       case CODE.NORMAL:
         return "";
       case CODE.MINE:
-        return "X";
+        return "";
       case CODE.CLICKED_MINE:
         return "펑 ";
       case CODE.QUESTION:
