@@ -1,4 +1,4 @@
-import React, { useContext, useCallback } from "react";
+import React, { useContext, useCallback, useMemo } from "react";
 import {
   TableContext,
   CODE,
@@ -9,30 +9,31 @@ import {
   RIGHT_3,
 } from "./Mine";
 
-const Td = ({ cellIndex, rowIndex }) => {
+const Td = React.memo(({ cellIndex, rowIndex }) => {
   const { tableData, dispatch, stop } = useContext(TableContext);
 
-  const getStyleTd = (code) => {
+  const getStyleTd = useCallback((code) => {
     switch (code) {
       case CODE.MINE:
       case CODE.NORMAL:
         return { backgroundColor: "#444" };
       case CODE.OPENED:
-      case CODE.CLICKED_MINE:
         return { backgroundColor: "white" };
       case CODE.QUESTION:
       case CODE.QUESTION_MINE:
         return { backgroundColor: "yellow" };
       case CODE.FLAG:
       case CODE.FLAG_MINE:
+      case CODE.CLICKED_MINE:
         return { backgroundColor: "red" };
       default:
         return { backgroundColor: "white" };
     }
-  };
-
+  }, []);
   const getTextTd = useCallback((code) => {
     switch (code) {
+      case CODE.OPENED:
+        return "";
       case CODE.NORMAL:
         return "";
       case CODE.MINE:
@@ -110,16 +111,19 @@ const Td = ({ cellIndex, rowIndex }) => {
     [tableData[rowIndex][cellIndex], stop]
   );
 
-  return (
-    <td
-      onClick={openCell}
-      onContextMenu={RightMouseOnClick}
-      className="td"
-      style={getStyleTd(tableData[rowIndex][cellIndex])}
-    >
-      {getTextTd(tableData[rowIndex][cellIndex])}
-    </td>
+  return useMemo(
+    () => (
+      <td
+        onClick={openCell}
+        onContextMenu={RightMouseOnClick}
+        className="td"
+        style={getStyleTd(tableData[rowIndex][cellIndex])}
+      >
+        {getTextTd(tableData[rowIndex][cellIndex])}
+      </td>
+    ),
+    [tableData[rowIndex][cellIndex], stop]
   );
-};
+});
 
 export default Td;

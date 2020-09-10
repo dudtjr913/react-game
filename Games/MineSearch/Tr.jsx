@@ -2,7 +2,7 @@ import React, { useContext } from "react";
 import Td from "./Td";
 import { TableContext } from "./Mine";
 
-const Tr = ({ rowIndex }) => {
+const Tr = React.memo(({ rowIndex }) => {
   const { tableData } = useContext(TableContext);
   return (
     <tr>
@@ -12,6 +12,6 @@ const Tr = ({ rowIndex }) => {
           .map((td, i) => <Td key={i} rowIndex={rowIndex} cellIndex={i} />)}
     </tr>
   );
-};
+});
 
 export default Tr;
