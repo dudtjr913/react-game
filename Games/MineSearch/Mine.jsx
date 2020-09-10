@@ -80,11 +80,84 @@ const reducer = (state, action) => {
       };
     case OPEN_CELL: {
       const openData = [...state.tableData];
-      openData[action.row] = [...openData[action.row]];
-      openData[action.row][action.cell] = CODE.OPENED;
+      openData.forEach((v, i) => {
+        openData[i] = [...state.tableData[i]];
+      });
+      const checked = [];
+      const checkedAround = (row, cell) => {
+        if (
+          cell < 0 ||
+          cell >= openData[0].length ||
+          row < 0 ||
+          row >= openData.length
+        ) {
+          return;
+        }
+        if (
+          [
+            CODE.MINE,
+            CODE.QUESTION_MINE,
+            CODE.FLAG_MINE,
+            CODE.FLAG,
+            CODE.QUESTION,
+          ].includes(openData[row][cell])
+        ) {
+          return;
+        }
+        if (checked.includes(row + "," + cell)) {
+          return;
+        } else {
+          checked.push(row + "," + cell);
+        }
+        let around = [];
+        if (openData[row - 1]) {
+          around = around.concat(
+            openData[row - 1][cell - 1],
+            openData[row - 1][cell],
+            openData[row - 1][cell + 1]
+          );
+        }
+        around = around.concat(
+          openData[row][cell - 1],
+          openData[row][cell + 1]
+        );
+        if (openData[row + 1]) {
+          around = around.concat(
+            openData[row + 1][cell - 1],
+            openData[row + 1][cell],
+            openData[row + 1][cell + 1]
+          );
+        }
+        const count = around.filter((v) =>
+          [CODE.MINE, CODE.FLAG_MINE, CODE.QUESTION_MINE].includes(v)
+        ).length;
+        openData[row][cell] = count;
+        if (count === 0) {
+          const near = [];
+          if (row > -1) {
+            if (row - 1 > -1) {
+              near.push(openData[row - 1][cell - 1]);
+              near.push(openData[row - 1][cell]);
+              near.push(openData[row - 1][cell + 1]);
+            }
+            near.push(openData[row][cell - 1]);
+            near.push(openData[row][cell + 1]);
+            if (row + 1 < openData.length) {
+              near.push(openData[row + 1][cell - 1]);
+              near.push(openData[row + 1][cell]);
+              near.push(openData[row + 1][cell + 1]);
+            }
+          }
+          near.forEach((v) => {
+            if (openData[v[0]][v[1]] !== CODE.OPENED) {
+              checkedAround(v[0], v[1]);
+            }
+          });
+        }
+      };
       return {
         ...state,
-        tableData: openData,
+        tableData: checkedAround(action.row, action.cell),
       };
     }
     case OPEN_MINE: {

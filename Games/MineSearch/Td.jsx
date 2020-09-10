@@ -39,8 +39,6 @@ const Td = ({ cellIndex, rowIndex }) => {
         return "X";
       case CODE.CLICKED_MINE:
         return "펑 ";
-      case CODE.OPENED:
-        return "";
       case CODE.QUESTION:
       case CODE.QUESTION_MINE:
         return "?";
@@ -48,7 +46,7 @@ const Td = ({ cellIndex, rowIndex }) => {
       case CODE.FLAG_MINE:
         return "!";
       default:
-        return "";
+        return code;
     }
   }, []);
 
@@ -112,16 +110,11 @@ const Td = ({ cellIndex, rowIndex }) => {
     [tableData[rowIndex][cellIndex], stop]
   );
 
-  const handleOnDrag = useCallback(() => {
-    return false;
-  });
-
   return (
     <td
       onClick={openCell}
       onContextMenu={RightMouseOnClick}
       className="td"
-      onDragStart={handleOnDrag}
       style={getStyleTd(tableData[rowIndex][cellIndex])}
     >
       {getTextTd(tableData[rowIndex][cellIndex])}
